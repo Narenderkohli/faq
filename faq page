@@ -1,0 +1,148 @@
+<!--    Product-Details      -->
+        <div class="accordion-container">
+          {% for block in section.blocks %}
+            <div class="set">
+              <span>
+                {%if block.settings.question != blank %}
+               {{ block.settings.question }} 
+                <i class="fa fa-plus"></i>
+                {% endif %}
+              </span>
+               {%if block.settings.ans != blank %}
+              <div class="content"> {{ block.settings.ans }} </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+ <!--    Product-Details      -->
+
+{% schema %}
+  {
+    "name": "Faq",
+    "settings": [],
+"blocks":[{
+"name":"faq",
+"type":"faq",
+"settings":[
+{
+"type":"text",
+"id":"question",
+"label":"Add Question",
+"default":"Use services data to identify your most common questions."
+},
+{
+"type":"text",
+"id":"ans",
+"label":"Add Question Answer",
+"default":"Your Faq page should address the most common questions customers have aboput your products,services,and brand as a whole."
+}
+]
+}
+],
+"presets":[
+{
+"name":"Faq",
+"category":"Faq"
+}
+]
+  }
+{% endschema %}
+
+{% stylesheet %}
+  
+.accordion-container h3 {
+    text-align: center;
+    letter-spacing: 0;
+    font-size: 18px;
+    color: #595959;
+}
+.accordion-container {
+    position: relative;
+   
+    height: auto;
+    margin: 10px auto;
+    max-width: 80%;
+}
+.accordion-container > h2{
+  text-align: center;
+  color: #fff;
+  padding-bottom: 5px;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+.set {
+    position: relative;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    margin: auto;
+}
+
+.set>span {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #555;
+    font-weight: 600;
+    border-bottom: 0px solid #ddd;
+    -webkit-transition: all .2s linear;
+    -moz-transition: all .2s linear;
+    transition: all .2s linear;
+    margin-bottom: 10px;
+    background: #fff;
+    cursor: pointer;
+  
+}
+.set > span i{
+  float: right;
+  margin-top: 2px;
+}
+
+.set>span.active {
+    background-color: #bc5d07;
+    color: #fff;
+}
+.content{
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+  display:none;
+}
+.content p{
+  padding: 10px 15px;
+  margin: 0;
+  color: #333;
+}
+
+{% endstylesheet %}
+
+{% javascript %}
+  $(document).ready(function() {
+  $(".set > span").on("click", function() {
+    if ($(this).hasClass("active")) {
+      $(this).removeClass("active");
+      $(this)
+        .siblings(".content")
+        .slideUp(0);
+      $(".set > span i")
+        .removeClass("fa-minus")
+        .addClass("fa-plus");
+    } else {
+      $(".set > span i")
+        .removeClass("fa-minus")
+        .addClass("fa-plus");
+      $(this)
+        .find("i")
+        .removeClass("fa-plus")
+        .addClass("fa-minus");
+      $(".set > span").removeClass("active");
+      $(this).addClass("active");
+      $(".content").slideUp(0);
+      $(this)
+        .siblings(".content")
+        .slideDown(0);
+    }
+  });
+});
+{% endjavascript %}
